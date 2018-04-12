@@ -9,7 +9,7 @@ import android.view.View;
 
 /**
  *
- * Created by DDY-XS on 2018/2/2.
+ * Created by XS on 2018/2/2.
  */
 public class CalendarDecorationLine extends RecyclerView.ItemDecoration  {
     private int lineColor = Color.parseColor("#CCCCCC");

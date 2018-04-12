@@ -4,7 +4,7 @@ import java.util.Date;
 
 /**
  * 日历实体bean
- * Created by DDY-XS on 2017/12/20.
+ * Created by XS on 2017/12/20.
  */
 public class CalendarBean {
     private Date calendarDate;  //时间

@@ -13,7 +13,7 @@ import android.view.View;
 
 /**
  * 日历itemView
- * Created by DDY-XS on 2017/12/20.
+ * Created by XS on 2017/12/20.
  */
 public class CalendarItemView extends View{
     private int width,height;

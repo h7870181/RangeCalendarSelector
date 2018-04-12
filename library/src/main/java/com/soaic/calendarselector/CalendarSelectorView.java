@@ -14,6 +14,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 
+import com.soaic.calendarselector.sticky.StickyItemDecoration;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
@@ -24,7 +26,7 @@ import java.util.Locale;
 
 /**
  * 日历选择器
- * Created by DDY-XS on 2017/12/20.
+ * Created by XS on 2017/12/20.
  */
 public class CalendarSelectorView extends RecyclerView {
     private List<CalendarBean> dateList = new ArrayList<>();
@@ -91,8 +93,10 @@ public class CalendarSelectorView extends RecyclerView {
         StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(7, StaggeredGridLayoutManager.VERTICAL);
         setLayoutManager(layoutManager);
         setAdapter(calendarAdapter);
-        //addItemDecoration(new CalendarDecoration(mContext,dateList,45));
+        addItemDecoration(new StickyItemDecoration());
         addItemDecoration(new CalendarDecorationLine());
+        getRecycledViewPool().setMaxRecycledViews(getAdapter().getItemViewType(0), 500);
+
         closeDefaultAnimator();
     }
 
@@ -317,7 +321,8 @@ public class CalendarSelectorView extends RecyclerView {
 
         @Override
         public void onBindViewHolder(CalendarHolder holder, int position) {
-            holder.bind(list.get(position),position);
+            if(position<list.size())
+                holder.bind(list.get(position),position);
         }
 
         @Override
@@ -340,11 +345,13 @@ public class CalendarSelectorView extends RecyclerView {
                 StaggeredGridLayoutManager.LayoutParams layoutParams1 = new StaggeredGridLayoutManager.LayoutParams(viewWidth, dp2px(45));
                 //view.setPadding(0, dp2px(2), 0, dp2px(2));
                 view.setLayoutParams(layoutParams1);
+                view.setTag(false);
             }else if(VIEW_TYPE_TITLE == bean.getViewType()){
                 StaggeredGridLayoutManager.LayoutParams layoutParams2 = new StaggeredGridLayoutManager.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, (viewWidth - 10));
                 layoutParams2.setFullSpan(true);
                 view.setLayoutParams(layoutParams2);
                 view.setIsYearMonth(true);
+                view.setTag(true);
             }
 
             view.setFlags(0);
@@ -551,11 +558,12 @@ public class CalendarSelectorView extends RecyclerView {
     }
 
     public void closeDefaultAnimator() {
-        this.getItemAnimator().setAddDuration(0);
-        this.getItemAnimator().setChangeDuration(0);
-        this.getItemAnimator().setMoveDuration(0);
-        this.getItemAnimator().setRemoveDuration(0);
-        ((SimpleItemAnimator) this.getItemAnimator()).setSupportsChangeAnimations(false);
+//        this.getItemAnimator().setAddDuration(0);
+//        this.getItemAnimator().setChangeDuration(0);
+//        this.getItemAnimator().setMoveDuration(0);
+//        this.getItemAnimator().setRemoveDuration(0);
+//        ((SimpleItemAnimator) this.getItemAnimator()).setSupportsChangeAnimations(false);
+        this.setItemAnimator(null);
     }
 
     private Date getMinData(Date date) {
